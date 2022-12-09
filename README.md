@@ -1,5 +1,10 @@
 # Import bulk users to LDAP server
 
+Import users to your LDAP server from a CSV file.<br>
+This program automatically converts the country field to its alpha2 code. <br>
+It also supports LDAP with TLS/SSL (LDAPS) 
+
+
 ## Build
 ```bash
 git clone https://github.com/paolobettelini/ldap-bulk-csv-rs
