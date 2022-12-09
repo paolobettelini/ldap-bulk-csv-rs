@@ -94,13 +94,13 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
 fn create_ou_iter(
     ldap_connection: &mut LdapConn,
-    path: &Vec<u8>,
+    path: &[u8],
 ) -> Result<(), Box<dyn std::error::Error>> {
     let str_path = str::from_utf8(path)?;
     println!("Creating OU(s) {str_path}");
 
     let index = str_path.to_lowercase().find("dc").unwrap();
-    let ous: Vec<&str> = str_path[..(index - 1)].split(",").collect();
+    let ous: Vec<&str> = str_path[..(index - 1)].split(',').collect();
     let dc: &str = &str_path[(index)..];
     let mut complete_path = "".to_owned();
 
