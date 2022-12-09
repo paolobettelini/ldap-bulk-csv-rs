@@ -1,6 +1,6 @@
 use std::{collections::HashSet, fs::File, str};
 use clap::Parser;
-use ldap3::LdapConn;
+use ldap3::{LdapConn, LdapConnSettings};
 use csv::{ByteRecord, ReaderBuilder};
 
 mod record;
@@ -13,7 +13,11 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let args = args::Args::parse();
 
     // Connect and bind to LDAP server
-    let mut ldap = LdapConn::new(&args.address)?;
+    let mut settings = LdapConnSettings::new();
+    if args.address.contains("ldaps") {
+        settings = settings.set_starttls(true);
+    }
+    let mut ldap = LdapConn::with_settings(settings, &args.address)?;
     ldap.simple_bind(&args.user, &args.password)?
         .success()?;
 
